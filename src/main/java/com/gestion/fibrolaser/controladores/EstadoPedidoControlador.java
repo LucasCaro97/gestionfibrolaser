@@ -3,6 +3,7 @@ package com.gestion.fibrolaser.controladores;
 import com.gestion.fibrolaser.entidades.EstadoPedido;
 import com.gestion.fibrolaser.servicios.EstadoPedidoServicio;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -87,9 +88,11 @@ public class EstadoPedidoControlador {
         return redirect;
     }
 
-    @PostMapping("/delete/{id}")
+    //FALTA AGREGAR MENSAJE DE EXITO EN LA OPERACION
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/delete/{id}")
     public RedirectView delete(@PathVariable Integer id) {
-        RedirectView redirect = new RedirectView("redirect:/estadospedidos");
+        RedirectView redirect = new RedirectView("/estadospedidos");
         estadoPedidoServicio.deleteById(id);
         return redirect;
     }

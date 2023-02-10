@@ -100,7 +100,7 @@ public class ClienteControlador {
 
 
     @PreAuthorize("hasAnyRole('ADMIN', 'ATENCION')")
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public RedirectView delete(@PathVariable Integer id, RedirectAttributes attributes){
         RedirectView redirect = new RedirectView("/clientes");
         clienteServicio.deleteById(id);

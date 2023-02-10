@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head :: head"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fibrolaser - Artistica</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9cf5630080.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/estilostablas.css}">
+</head>
 <body>
+
 <header class="hero">
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">LOGO</a>
+            <a class="navbar-brand" th:href="@{/auth/home}">FIBROLASER</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav m-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Pagina Principal</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/auth/home}">Pagina Principal</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">Productos</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">Empresa</a></li>
                     <li class="nav-item" sec:authorize="hasRole('CLIENTE')">
@@ -39,6 +49,7 @@
         </div>
     </nav>
 </header>
+
 <main>
     <div class="container">
         <div class="row mt-4">
@@ -76,7 +87,9 @@
 
 </main>
 
-
+<footer th:fragment="footer" class="bg-dark fixed-bottom text-center text-white py-3" >
+    <span th:text="${session.id != null} ? |${session.username} - ${session.rol}| : 'FIBROLASER'"></span>
+</footer>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/js/validation.js}"></script>
 </body>

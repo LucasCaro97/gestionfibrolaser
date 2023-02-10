@@ -2,6 +2,8 @@ package com.gestion.fibrolaser.entidades;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -11,6 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(name = "pedidos")
+@Where(clause = "fk_estado < 5")
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +38,7 @@ public class Pedido {
     @OneToOne
     @JoinColumn(name = "fk_usuario")
     private Usuario usuario;
-
+    @Column(name ="alta_pedido")
+    private Boolean alta;
     
 }

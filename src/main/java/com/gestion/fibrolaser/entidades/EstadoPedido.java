@@ -19,6 +19,7 @@ public class EstadoPedido {
     private Integer id;
     @Column(name = "nombre_estado", nullable = false)
     private String nombre;
-
+    @Column(name ="alta_estado")
+    private Boolean alta;
 
 }

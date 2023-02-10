@@ -18,4 +18,6 @@ public class Rol {
     private Integer id;
     @Column(name = "rol_name")
     private String name;
+    @Column(name ="alta_rol")
+    private Boolean alta;
 }

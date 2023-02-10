@@ -4,12 +4,11 @@ import com.gestion.fibrolaser.entidades.Pedido;
 import com.gestion.fibrolaser.entidades.Usuario;
 import com.gestion.fibrolaser.servicios.*;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -39,8 +38,12 @@ public class PedidoControlador {
         mav.addObject("pedidos", pedidoServicio.getAll());
         return mav;
 
+
+
+
     }
 
+    //ENDPOINT PARA CUANDO LOS USUARIOS CLIENTES REALIZEN PEDIDOS Y SOLICITEN VER SU LISTA DE PEDIDOS PERSONAL - FALTA RESOLVER
     @PreAuthorize("hasAnyRole('CLIENTE', 'ATENCION')")
     @GetMapping("/clientes")
     public ModelAndView getByUser (HttpServletRequest request, HttpSession session){
@@ -48,7 +51,7 @@ public class PedidoControlador {
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (inputFlashMap != null) mav.addObject("exito", inputFlashMap.get("exito"));
-        mav.addObject("misPedidos", pedidoServicio.getByUser(4));
+        mav.addObject("misPedidos", pedidoServicio.getByUser(4)); // FALTA CORREGIR
         return mav;
 
     }
@@ -127,11 +130,11 @@ public class PedidoControlador {
 
 
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @PostMapping("/delete/{id}")
-    public ModelAndView deleteById(@PathVariable Integer id){
-        ModelAndView mav = new ModelAndView("redirect:/pedidos");
+    @GetMapping("/delete/{id}")
+    public RedirectView deleteById(@PathVariable Integer id){
+        RedirectView redirect = new RedirectView("/pedidos");
         pedidoServicio.deleteById(id);
-        return mav;
+        return redirect;
     }
 
 

@@ -65,7 +65,7 @@ public class RolController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public RedirectView deleteById(@PathVariable Integer id){
         RedirectView redirect = new RedirectView("/roles");
         rolServicio.deleteById(id);

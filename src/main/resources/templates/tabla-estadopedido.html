@@ -17,13 +17,13 @@
 <header class="hero">
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">LOGO</a>
+            <a class="navbar-brand" th:href="@{/auth/home}">FIBROLASER</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav m-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Pagina Principal</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/auth/home}">Pagina Principal</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">Productos</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">Empresa</a></li>
                     <li class="nav-item" sec:authorize="hasRole('CLIENTE')">
@@ -80,7 +80,16 @@
 
                             <td th:text="${est.id}"></td>
                             <td th:text="${est.nombre}"></td>
-                            <td><a class="btn btn-primary" th:href="@{estadospedidos/form/__${est.id}__}" >Editar</a></td>
+                            <td>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Accion
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{estadospedidos/form/__${est.id}__}" >Editar</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/estadospedidos/delete/__${est.id}__}">Eliminar</a></li>
+                                </ul>
+                            </td>
+
 
 
                         </tr>

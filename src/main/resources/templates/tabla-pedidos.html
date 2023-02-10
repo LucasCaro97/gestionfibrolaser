@@ -17,13 +17,13 @@
 <header class="hero">
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">LOGO</a>
+            <a class="navbar-brand" th:href="@{/auth/home}">FIBROLASER</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav m-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Pagina Principal</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/auth/home}">Pagina Principal</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">Productos</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">Empresa</a></li>
                     <li class="nav-item" sec:authorize="hasRole('CLIENTE')">
@@ -43,6 +43,9 @@
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                         <a th:href="@{/roles}"  class="nav-link text-white">Roles</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyRole('OPERADOR', 'ADMIN')">
+                        <a th:href="@{/asistencias}"  class="nav-link text-white">Asistencia</a>
                     </li>
                 </ul>
                 <a class="btn btn-dark" th:href="@{/logout}" >Cerrar Sesion</a>
@@ -86,7 +89,16 @@
                             <td th:text="${ped.estadoPedido.nombre}"></td>
                             <td th:text="${ped.senia}"></td>
                             <td th:text="${ped.fechaEntrega}"></td>
-                            <td><a class="btn btn-warning" th:href="@{pedidos/form/__${ped.id}__}">Actualizar</a></td>
+                            <td>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Accion
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{pedidos/form/__${ped.id}__}">Actualizar</a></li>
+                                    <li><a sec:authorize="hasAnyRole('ADMIN')" class="dropdown-item" th:href="@{/pedidos/delete/__${ped.id}__}">Eliminar</a></li>
+                                </ul>
+                            </td>
+
 
                         </tr>
                         </tbody>
@@ -102,7 +114,9 @@
 
 </main>
 
-
+<footer th:fragment="footer" class="bg-dark fixed-bottom text-center text-white py-3" >
+    <span th:text="${session.id != null} ? |${session.username} - ${session.rol}| : 'FIBROLASER'"></span>
+</footer>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
