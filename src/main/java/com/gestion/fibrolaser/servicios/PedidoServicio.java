@@ -1,5 +1,6 @@
 package com.gestion.fibrolaser.servicios;
 
+import com.gestion.fibrolaser.entidades.EstadoPedido;
 import com.gestion.fibrolaser.entidades.Pedido;
 import com.gestion.fibrolaser.entidades.Usuario;
 import com.gestion.fibrolaser.repositorios.PedidoRepository;
@@ -47,9 +48,15 @@ public class PedidoServicio {
     }
 
     @Transactional(readOnly = true)
-    public List<Pedido> getAll(){
+    public List<Pedido> getAll(Integer idEstado){
+
         Sort sort = Sort.by("fechaEntrega").ascending();
-        return pedidoRepository.findAll(sort);
+
+        if ( idEstado != null){
+            return pedidoRepository.searchByEstadoPedido(idEstado);
+        }else {
+            return pedidoRepository.findAll(sort);
+        }
 
     }
 
@@ -64,6 +71,11 @@ public class PedidoServicio {
         return pedidoRepository.findByUsuario(usuario);
 
     }
+
+//    @Transactional(readOnly = true)
+//    public List<Pedido> getByEstadoPedidoç(EstadoPedido pedido){
+//        return pedidoRepository.searchByEstadoPedido(pedido.getId());
+//    }
 
 
     @Transactional

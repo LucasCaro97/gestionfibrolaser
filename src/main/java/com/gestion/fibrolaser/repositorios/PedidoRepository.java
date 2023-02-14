@@ -1,5 +1,6 @@
 package com.gestion.fibrolaser.repositorios;
 
+import com.gestion.fibrolaser.entidades.EstadoPedido;
 import com.gestion.fibrolaser.entidades.Pedido;
 import com.gestion.fibrolaser.entidades.Usuario;
 import org.springframework.data.domain.Sort;
@@ -19,6 +20,11 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
     @Query( value= "SELECT * FROM pedidos WHERE fk_usuario = ?1", nativeQuery = true)
     List<Pedido> searchByUsuarioNativeQUery(Integer id);
+
+    @Query( value= "SELECT * FROM pedidos WHERE fk_estado = ?1", nativeQuery = true)
+    List<Pedido> searchByEstadoPedido(Integer id);
+
+
 
     List<Pedido> findByUsuario(Usuario usuario);
 

@@ -6,6 +6,7 @@ import com.gestion.fibrolaser.servicios.*;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +31,14 @@ public class PedidoControlador {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'ATENCION', 'OPERADOR')")
     @GetMapping
-    public ModelAndView getAll (HttpServletRequest request){
+    public ModelAndView getAll (HttpServletRequest request, @Param("estadoPedido") Integer estadoPedido){
         ModelAndView mav = new ModelAndView("tabla-pedidos");
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (inputFlashMap != null) mav.addObject("exito", inputFlashMap.get("exito"));
-        mav.addObject("pedidos", pedidoServicio.getAll());
+        mav.addObject("estadosPedidos", estadoPedidoServicio.getAll());
+        mav.addObject("pedidos", pedidoServicio.getAll(estadoPedido));
+        //mav.addObject("palabraClave", palabraClave);
         return mav;
 
 
